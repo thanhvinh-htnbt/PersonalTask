@@ -3,11 +3,11 @@ const express = require('express');
 
 const router = express.Router();
 
-router.post('/', taskController.createTask);
+router.post('/new', taskController.createTask);
+
+router.get('', taskController.findTasksByUserId);
 
 router.get('/:id', taskController.findTaskById);
-
-router.get('/', taskController.findTasksByUserId);
 
 router.put('/:id', taskController.updateTask);
 

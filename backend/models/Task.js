@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'User ID is required']
+    },
+    
     name: {
         type: String,
         required: [true, 'Task name is required']
@@ -18,8 +24,7 @@ const taskSchema = new mongoose.Schema({
     },
 
     deadline: {
-        type: Date,
-        required: [true, 'Task deadline is required']
+        type: Date
     }
 });
 

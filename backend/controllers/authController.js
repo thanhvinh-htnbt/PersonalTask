@@ -22,7 +22,7 @@ const loginUser = async (req, res) => {
 
 const logoutUser = async (req, res) => {
     try {
-        const userId = req.user._id; // Assuming user ID is stored in req.user
+        const userId = req.user._id; 
         await authService.logoutUser(userId);
         res.status(200).json({ success: true, message: 'User logged out successfully' });
     } catch (error) {

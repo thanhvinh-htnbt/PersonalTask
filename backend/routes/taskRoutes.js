@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.use(authMiddleware.authMiddleware);
 
-router.post('/new', taskController.createTask);
+router.post('', taskController.createTask);
 
 router.get('', taskController.findTasksByUserId);
 

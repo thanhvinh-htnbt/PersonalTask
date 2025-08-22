@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import * as tasksApi from '../api/tasksApi';
 
-const useTask = () => {
+export const useTask = () => {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -22,6 +22,20 @@ const useTask = () => {
     useEffect(() => {
         fetchTasks();
     }, [fetchTasks]);
+
+    const getTasks = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const data = await tasksApi.getTasks();
+            return data;
+        } catch (err) {
+            setError(err);
+            throw err; 
+        } finally {
+            setLoading(false);
+        }
+    };  
 
     const createTask = async (taskData) => {
         setLoading(true);
@@ -80,11 +94,10 @@ const useTask = () => {
         loading,
         error,
         fetchTasks,
+        getTasks,
         createTask,
         updateTask,
         deleteTask,
         getTaskById,
     };
 };
-
-export default useTask;

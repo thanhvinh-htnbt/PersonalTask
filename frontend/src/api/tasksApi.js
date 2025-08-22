@@ -4,7 +4,7 @@ const API_URL = '/tasks';
 
 export const getTasks = async () => {
     try {
-        const response = await api.get(API_URL);
+        const response = await api.get(`${API_URL}`);
         return response.data;
     } catch (error) {
         throw error.response ? error.response.data : error;
@@ -13,7 +13,7 @@ export const getTasks = async () => {
 
 export const createTask = async (taskData) => {
     try {
-        const response = await api.post(API_URL, taskData);
+        const response = await api.post(`${API_URL}`, taskData);
         return response.data;
     } catch (error) {
         throw error.response ? error.response.data : error;

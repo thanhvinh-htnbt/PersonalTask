@@ -1,33 +1,40 @@
 import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
-export default function LoginForm({ onLogin }) {
-    const [userName, setUserName] = useState("");
+const LoginForm = () => {
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            await onLogin({ userName, password });
+            await login({ username, password });
+            navigate("/tasks"); 
         } catch (err) {
-            setError(err, "Login failed. Please check your credentials.");
+            setError("Login failed. Please check your credentials.");
+            console.error("Login error:", err);
         }
     };
 
-    const handleResgister = () => {
-        // Handle registration logic here
-        // This could redirect to a registration page or open a modal
-        console.log("Redirecting to registration page...");
+    const handleRegister = () => {  
+        navigate("/register");    
     }
 
     return (
-        <form className="w-1/2 mx-auto" onSubmit={handleLogin}>
+        <form className="w-full max-w-md mx-auto p-6 bg-white shadow-lg rounded-xl space-y-4" onSubmit={handleLogin}>
             <div>
                 <label>User name:</label>
                 <input
-                    type="username"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    type="text"
+                    value={username}
+                    onChange={(e) => {
+                        setUsername(e.target.value);
+                        setError("");
+                    }}
                     required className="p-2 border rounded-md w-full"
                 />
             </div>
@@ -36,17 +43,22 @@ export default function LoginForm({ onLogin }) {
                 <input
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                        setPassword(e.target.value);
+                        setError(""); 
+                    }}
                     required className="p-2 border rounded-md w-full"
                 />
             </div>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             <div>
-                <button className="ml-2" type="submit" onClick={handleLogin}>Login</button>
+                <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md" type="submit">Login</button>
             </div>
             <div>
-                <button className="ml-2" type="button" onClick={handleResgister}>Register</button>
-            </div>
-            {error && <p className="error">{error}</p>}
+                <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md" type="button" onClick={handleRegister}>Register</button>
+            </div>            
         </form>
     );
 };
+
+export default LoginForm;

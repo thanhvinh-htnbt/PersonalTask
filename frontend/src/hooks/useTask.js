@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-
 import * as tasksApi from '../api/tasksApi';
 
 export const useTask = () => {
@@ -19,11 +18,12 @@ export const useTask = () => {
             setLoading(false);
         }
     }, []);
+
     useEffect(() => {
         fetchTasks();
     }, [fetchTasks]);
 
-    const getTasks = async () => {
+    const getTasks = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
@@ -35,7 +35,7 @@ export const useTask = () => {
         } finally {
             setLoading(false);
         }
-    };  
+    },[]);
 
     const createTask = async (taskData) => {
         setLoading(true);

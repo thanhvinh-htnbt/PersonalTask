@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { register } from "../api/authApi";
 
 const RegisterForm = () => {
-    const [userName, setUserName] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -11,7 +11,7 @@ const RegisterForm = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            await register({ userName, password });
+            await register({ username, password });
             navigate("/login");
         } catch (err) {
             setError(err, "Login failed. Please check your credentials.");
@@ -19,13 +19,13 @@ const RegisterForm = () => {
     };
 
     return (
-        <form className="w-1/2 mx-auto" onSubmit={handleRegister}>
+        <form className="w-full max-w-md mx-auto p-6 bg-white shadow-lg rounded-xl space-y-4" onSubmit={handleRegister}>
             <div>
                 <label>User name:</label>
                 <input
-                    type="username"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required className="p-2 border rounded-md w-full"
                 />
             </div>
@@ -38,10 +38,10 @@ const RegisterForm = () => {
                     required className="p-2 border rounded-md w-full"
                 />
             </div>
-            <div>
-                <button className="ml-2" type="button" onClick={handleRegister}>Register</button>
-            </div>
-            {error && <p className="error">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <div className="flex justify-center items-center">
+                <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md w-25 h-10" type="button" onClick={handleRegister}>Register</button>
+            </div>            
         </form>
     );
 };

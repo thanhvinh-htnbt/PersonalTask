@@ -51,11 +51,11 @@ const LoginForm = () => {
                 />
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
-            <div>
-                <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md" type="submit">Login</button>
+            <div className="flex justify-center items-center">
+                <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md w-25 h-10" type="submit">Login</button>
             </div>
-            <div>
-                <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md" type="button" onClick={handleRegister}>Register</button>
+            <div className="flex justify-center items-center"> 
+                <button className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md w-25 h-10" type="button" onClick={handleRegister}>Register</button>
             </div>            
         </form>
     );

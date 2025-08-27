@@ -32,9 +32,9 @@ api.interceptors.response.use(
             originalRequest._retry = true;
             try {
                 const response = await api.post('/auth/refresh-token', { refreshToken: localStorage.getItem('refreshToken') });
-                localStorage.setItem('accessToken', response.data.accessToken);
-                localStorage.setItem('refreshToken', response.data.refreshToken);
-                originalRequest.headers.Authorization = `Bearer ${response.data.token}`;
+                localStorage.setItem('accessToken', response.data.data.accessToken);
+                localStorage.setItem('refreshToken', response.data.data.refreshToken);
+                originalRequest.headers.Authorization = `Bearer ${response.data.data.accessToken}`;
                 return api(originalRequest);
             } catch (refreshError) {
                 console.error('Token refresh failed:', refreshError);

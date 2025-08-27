@@ -5,7 +5,7 @@ const API_URL = '/auth';
 export const register = async (userData) => {
     try {
         const response = await api.post(`${API_URL}/register`, userData);
-        return response.data;
+        return response.data.data;
     } catch (error) {
         throw error.response ? error.response.data : error;
     }
@@ -14,7 +14,7 @@ export const register = async (userData) => {
 export const login = async (userData) => {
     try {
         const response = await api.post(`${API_URL}/login`, userData);
-        return response.data;
+        return response.data.data;
     } catch (error) {
         throw error.response ? error.response.data : error;
     }
@@ -23,7 +23,7 @@ export const login = async (userData) => {
 export const logout = async () => {
     try {
         const response = await api.post(`${API_URL}/logout`);
-        return response.data;
+        return response.data.data;
     } catch (error) {
         throw error.response ? error.response.data : error;
     }
@@ -32,7 +32,7 @@ export const logout = async () => {
 export const refreshToken = async () => {
     try {
         const response = await api.post(`${API_URL}/refresh-token`, { refreshToken: localStorage.getItem('refreshToken') });
-        return response.data;
+        return response.data.data;
     } catch (error) {
         throw error.response ? error.response.data : error;
     }

@@ -8,14 +8,14 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'));
     const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
-    const [loading, setLoading] = useState(true);
+    const [authLoading, setAuthLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
         if (accessToken) {
             setIsAuthenticated(true);
         } else {
-            setLoading(false);
+            setAuthLoading(false);
             setUser(null);
             setIsAuthenticated(false);
         }
@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
     const login = async (userData) => {
         try {
             const data = await authApi.login(userData);
-            console.log("Login successful:", userData);
             setUser(data.user);
             setAccessToken(data.accessToken);
             setRefreshToken(data.refreshToken);
@@ -51,21 +50,9 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const refreshAccessToken = async () => {
-        try {
-            const data = await authApi.refreshToken();
-            setAccessToken(data.accessToken);
-            setRefreshToken(data.refreshToken);
-            localStorage.setItem('accessToken', data.accessToken);
-            localStorage.setItem('refreshToken', data.refreshToken);
-        } catch (error) {
-            console.log("Failed to refresh access token:", error);
-            logout();
-        }
-    };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout, refreshAccessToken, isAuthenticated, accessToken, refreshToken }}>
+        <AuthContext.Provider value={{ user, authLoading, login, logout, isAuthenticated, accessToken, refreshToken }}>
             {children}
         </AuthContext.Provider>
     );
